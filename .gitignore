@@ -1,0 +1,7 @@
+.vscode
+.editorconfig
+GameStore.API/bin
+GameStore.API/obj
+GameStore.API/Data/Migrations/
+GameStore.API/appsettings.Development.json
+GameStore.API/appsettings.json
