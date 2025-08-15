@@ -1,11 +1,14 @@
 ﻿@page "/"
 @using Models
-
+@using Clients
 
 <PageTitle>GameCatolog</PageTitle>
 
-
-<table class = "table table-striped table-bordered table-hover">
+@if(games is null){
+    <p><em>Loading ... </em></p>
+}
+else{
+<table class = "table table-striped table-bordered table-hover mt-3">
     <thead class = "table-dark">
         <th>Id</th>
         <th>Name</th>
@@ -29,12 +32,16 @@
         }
     </tbody>
 </table>
-
+}
 
 @code{
-    @* private  *@
+    private GamesClient Client = new();
     private GameSummary[]? games ; 
 
+    protected override void OnInitialized()
+    {
+        games = Client.GetGames(); 
+    }
 
 }
 

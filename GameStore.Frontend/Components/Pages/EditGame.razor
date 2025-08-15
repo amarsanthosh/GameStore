@@ -1,0 +1,36 @@
+﻿@page "/editgame"
+@using Models
+
+<PageTitle>New Game</PageTitle>
+<h3>NewGame</h3>
+
+<div class = "row">
+    <div class = "col-md-4">
+        <EditForm Model="@game"FormName="editGame">
+            <div class = "mb-3">
+                <label for="name"class="form-label">Name</label>
+                <InputText id="name"@bind-Value="game.Name"class="form-control"></InputText>
+            </div>
+            <div class = "mb-3">
+                <label for="genreId"class="form-label">Name</label>
+                <InputSelect id="genre"@bind-Value="game.GenreId"class="form-control"></InputSelect>
+            </div>                        
+            <div class = "mb-3">
+                <label for="Price"class="form-label">Name</label>
+                <InputSelect id="Price"@bind-Value="game.Price"class="form-control"></InputSelect>
+            </div>                                    
+            <div class = "mb-3">
+                <label for="date"class="form-label">Name</label>
+                <InputSelect id="date"@bind-Value="game.ReleaseDate"class="form-control"></InputSelect>
+            </div>                                    
+        </EditForm>
+
+    </div>
+</div>
+
+@code {
+    private GameDetails game{get;set;} = new(){
+        Name = string.Empty,
+        ReleaseDate = DateOnly.FromDateTime(DateTime.UtcNow)
+    };     
+}
