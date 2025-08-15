@@ -5,3 +5,7 @@ GameStore.API/obj
 GameStore.API/Data/Migrations/
 GameStore.API/appsettings.Development.json
 GameStore.API/appsettings.json
+GameStore.Frontend/appsettings.Development.json
+GameStore.Frontend/appsettings.json
+GameStore.Frontend/obj
+GameStore.Frontend/bin
