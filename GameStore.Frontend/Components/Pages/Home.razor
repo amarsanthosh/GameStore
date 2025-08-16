@@ -1,9 +1,14 @@
 ﻿@page "/"
 @using Models
 @using Clients
+@inject GamesClient Client
+@inject GenresClient GenresClient
+@attribute [StreamRendering]
 
 <PageTitle>GameCatolog</PageTitle>
-
+<div class="mt-2">
+    <a class="btn btn-primary" role="button" href="/editgame">NewGame</a>
+</div>
 @if(games is null){
     <p><em>Loading ... </em></p>
 }
@@ -27,7 +32,17 @@ else{
                 <td>@game.Genre</td>
                 <td class = "text-end">@game.Price.ToString("(2")</td>
                 <td>@game.ReleaseDate</td>
-                <td> </td>
+                <td> 
+                  <div class = "d-flex"><a class = "btn btn-primary me-2" role="button" href="@GameUrl(game.Id)">
+                    <i class="bi bi-pencil-fill"></i>
+                  </a>
+                  <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="@GetDeleteModalId(game)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                  
+                  </div>    
+                  <DeleteGame Game="@game" />
+                </td>
             </tr>
         }
     </tbody>
@@ -35,13 +50,19 @@ else{
 }
 
 @code{
-    private GamesClient Client = new();
+    @* private GamesClient Client = new(); *@
     private GameSummary[]? games ; 
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        games = Client.GetGames(); 
+        games = await Client.GetGamesAsync(); 
     }
+
+    private string GetDeleteModalId(GameSummary game){
+        return $"#{DeleteGame.GetModalId(game)}"; 
+    }
+
+    private static string GameUrl(int id) => $"/editgame/{id}";
 
 }
 
