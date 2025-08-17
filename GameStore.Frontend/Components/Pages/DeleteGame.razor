@@ -1,13 +1,11 @@
-﻿@page "/editgame"
-@page "/editgame/{id:int}"
-
+﻿
 @rendermode InteractiveServer
 
 @using GameStore.Frontend.Clients
 @using Models
 @inject NavigationManager NavigationManager
 @inject GamesClient Client
-
+@* @attribute [StreamRendering] *@
 
 <PageTitle>DeleteGame</PageTitle>
 
@@ -38,12 +36,16 @@
     public static string GetModalId(GameSummary? game)
     {
         ArgumentNullException.ThrowIfNull(game);
-        return $"deleteModel - {game.Id}";
+        return $"deleteModel-{game.Id}";
     }
 
     private async Task ConfirmAsync(){
         await Client.DeleteGameAsync(Game!.Id);
-        NavigationManager.Refresh();
+        @* NavigationManager.Refresh(); *@
+        @* NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true); *@
+
     }
+
+    
 
 }

@@ -3,13 +3,23 @@ using GameStore.Frontend.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddServerSideBlazor(options =>
+{
+    options.DetailedErrors = builder.Environment.IsDevelopment();
+    options.DisconnectedCircuitRetentionPeriod = TimeSpan.FromMinutes(3);
+    options.DisconnectedCircuitMaxRetained = 100;
+});
+
+
+
 // Add services to the container.
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 var gameStoreApiUrl = builder.Configuration["GameStoreApiUrl"] ?? throw new Exception("GameStoreApiUrl is not set"); 
 
 builder.Services.AddHttpClient<GamesClient>(
-    client => client.BaseAddress = new Uri(gameStoreApiUrl)
+    Client => Client.BaseAddress = new Uri(gameStoreApiUrl)
 );
 
 builder.Services.AddHttpClient<GenresClient>(
@@ -28,6 +38,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+// Critical: Add cache control headers
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate");
+    await next();
+});
 
 app.UseAntiforgery();
 

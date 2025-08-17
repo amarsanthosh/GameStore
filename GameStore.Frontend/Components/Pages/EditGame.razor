@@ -3,12 +3,12 @@
 
 @rendermode InteractiveServer
 
+
 @using GameStore.Frontend.Clients
 @using Models
 @inject NavigationManager NavigationManager
 @inject GamesClient GamesClient
 @inject GenresClient GenresClient
-
 
 <PageTitle>@title</PageTitle>
 <h3>@title</h3>
@@ -17,7 +17,7 @@
 
 <div class = "row">
     <div class = "col-md-4">
-        <EditForm Model="@game"FormName="editGame" OnValidSubmit="HandleSubmitAsync" Enhance>
+        <EditForm Model="@game"FormName="editGame" OnValidSubmit="HandleSubmitAsync" >
             <DataAnnotationsValidator/>
             <ValidationSummary/>
             <div class = "mb-3">
@@ -67,8 +67,8 @@
     @* private GenresClient genresClient = new(); *@
     private Genre[]? genres;
 
-    protected override async Task OnParametersSetAsync(){
-        if(game is not null) return ; 
+   @* protected override async Task OnParametersSetAsync(){
+        @* if(game is not null) return ;  
         if(Id is not null){ 
             game = await GamesClient.GetGameAsync(Id.Value);
             title = $"Edit{game.Name}"; 
@@ -78,12 +78,27 @@
                 Name = string.Empty,
                ReleaseDate = DateOnly.FromDateTime(DateTime.UtcNow)
             };
-
-        title = "New Game";
-
-
+            title = "New Game";
+        }
+    }*@
+    protected override async Task OnParametersSetAsync()
+{
+    if (Id.HasValue && Id.Value > 0)
+    {
+        var existingGame = await GamesClient.GetGameAsync(Id.Value);
+        if (existingGame != null)
+        {
+            game = existingGame;
+            title = $"Edit {game.Name}";
         }
     }
+    else
+    {
+        game = new() { Name = string.Empty, ReleaseDate = DateOnly.FromDateTime(DateTime.UtcNow) };
+        title = "New Game";
+    }
+}
+
     protected override async Task OnInitializedAsync()
     {
         genres= await GenresClient.GetGenresAsync();
@@ -92,13 +107,13 @@
     @* private GamesClient gamesClient = new(); *@
     private async Task HandleSubmitAsync(){
         ArgumentNullException.ThrowIfNull(game) ;
-        if(Id is null)
-            await GamesClient.AddGameAsync(game);
+        if(Id is null){
+            await GamesClient.AddGameAsync(game);}
         else{
             game.Id = Id.Value;
             await GamesClient.UpdateGameAsync(game); 
         } 
-        @* NavigationManager.NavigateTo("/"); /// Need to modify this..... *@
+        NavigationManager.NavigateTo("/"); /// Need to modify this.....
     }
 
 }
