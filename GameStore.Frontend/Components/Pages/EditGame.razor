@@ -13,8 +13,10 @@
 <PageTitle>@title</PageTitle>
 <h3>@title</h3>
 
-@* @if(genre is null ) *@
-
+@if(genres == null){
+    <p><em>Loading...</em></p>
+}
+else{
 <div class = "row">
     <div class = "col-md-4">
         <EditForm Model="@game"FormName="editGame" OnValidSubmit="HandleSubmitAsync" >
@@ -51,7 +53,7 @@
 
     </div>
 </div>
-
+}
 @code {
     [Parameter]
     public int? Id{get;set;}    
