@@ -43,7 +43,7 @@
     private async Task ConfirmAsync(){
         await Client.DeleteGameAsync(Game!.Id);
         @* NavigationManager.Refresh(); *@
-        @* NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true); *@
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
 
     }
 

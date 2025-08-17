@@ -12,6 +12,17 @@ Content-Type: application/json
     "price" : 56.99,
     "releaseDate": "2011-01-18"
 } 
+### 
+
+POST http://localhost:5139/games
+Content-Type: application/json
+
+{
+    "name" : "Cricket",
+    "genreID" : 1,
+    "price" : 18.99,
+    "releaseDate": "2001-01-18"
+} 
 ###
 PUT  http://localhost:5139/games/4
 Content-Type: application/json
