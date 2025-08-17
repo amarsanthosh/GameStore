@@ -29,11 +29,12 @@ else{
             </div>
             <div class = "mb-3">
                 <label for="genre"class="form-label">Genre</label>
-                <InputSelect id="genre"@bind-Value="game.GenreId"class="form-control"></InputSelect>
+                <InputSelect id="genre"@bind-Value="game.GenreId"class="form-control">
                 <option value="">Select a genre</option>
                 @foreach(var genre in genres!){
                     <option value="@genre.Id">@genre.Name</option>
                 }
+                </InputSelect>
                 <ValidationMessage For="()=>game.GenreId" />
 
             </div>                        
