@@ -40,11 +40,11 @@ app.UseHttpsRedirection();
 
 
 // Critical: Add cache control headers
-app.Use(async (context, next) =>
-{
-    context.Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate");
-    await next();
-});
+// app.Use(async (context, next) =>
+// {
+//     context.Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate");
+//     await next();
+// });
 
 app.UseAntiforgery();
 
