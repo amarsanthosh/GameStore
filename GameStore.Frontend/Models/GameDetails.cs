@@ -15,7 +15,7 @@ public class GameDetails
     public required string Name { get; set; }
     [Required(ErrorMessage = "The Genre Field is required")]
     // [JsonConverter(typeof(StringConverter))]
-    public string? GenreId { get; set; }
+    public int GenreId { get; set; }
     [Required]
     [Range(0, 100)]
     public decimal Price { get; set; }
